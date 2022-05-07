@@ -1,0 +1,18 @@
+config BR2_PACKAGE_CHUMBY_FIRMWARE
+	bool "chumby-firmware"
+	depends on BR2_arm
+	help
+	  Chumby Firmware
+
+	  Pre-compiled binary of the first-stage bootloader
+
+	  https://github.com/sutajiokousagi/meta-chumby
+
+if BR2_PACKAGE_CHUMBY_FIRMWARE
+
+config BR2_PACKAGE_CHUMBY_FIRMWARE_C8_OBM_BIN
+	bool "chumby 8 obm.bin"
+	help
+	  Bootloader binary for Chumby 8 (silvermoon).
+
+endif
