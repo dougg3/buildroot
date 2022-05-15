@@ -31,3 +31,29 @@
 &rtc {
 	status = "okay";
 };
+
+&sdhci3 {
+	non-removable;
+	no-1-8-v;
+	bus-width = <4>;
+	max-frequency = <24000000>;
+	cap-sd-highspeed;
+	status = "okay";
+};
+
+&sdhci2 {
+	non-removable;
+	no-1-8-v;
+	bus-width = <4>;
+	max-frequency = <24000000>;
+	cap-sd-highspeed;
+	status = "okay";
+};
+
+&usb_host_phy {
+	status = "okay";
+};
+
+&usb_host {
+	status = "okay";
+};
