@@ -1,0 +1,2 @@
+# Allow empty password logins
+DROPBEAR_ARGS=-B
