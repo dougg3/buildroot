@@ -13,7 +13,22 @@
 	compatible = "chumby,chumby8", "mrvl,pxa168-aspenite", "mrvl,pxa168";
 
 	chosen {
+		#address-cells = <1>;
+		#size-cells = <1>;
+		ranges;
+
 		bootargs = "console=ttyS0,115200 root=/dev/nfs nfsroot=192.168.1.100:/nfsroot/ ip=192.168.1.101:192.168.1.100::255.255.255.0::eth0:on";
+
+		framebuffer@7e00000 {
+			compatible = "simple-framebuffer";
+			reg = <0x07e00000 (800 * 600 * 4)>;
+			width = <800>;
+			height = <600>;
+			stride = <(800 * 4)>;
+			format = "a8r8g8b8";
+			clocks = <&soc_clocks PXA168_CLK_DISP0>;
+			resets = <&soc_clocks PXA168_CLK_DISP0>;
+		};
 	};
 
 	aliases {
@@ -23,6 +38,17 @@
 
 	memory {
 		reg = <0x00000000 0x08000000>;
+	};
+
+	reserved-memory {
+		#address-cells = <1>;
+		#size-cells = <1>;
+		ranges;
+
+		display_reserved: framebuffer@7e00000 {
+			reg = <0x07e00000 (800 * 600 * 4)>;
+			no-map;
+		};
 	};
 
 	soc {
