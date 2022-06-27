@@ -6,10 +6,11 @@
 
 /dts-v1/;
 #include "pxa168.dtsi"
+#include <dt-bindings/gpio/gpio.h>
 
 / {
 	model = "Chumby Industries Chumby 8";
-	compatible = "chumby,chumby8", "mrvl,pxa168";
+	compatible = "chumby,chumby8", "mrvl,pxa168-aspenite", "mrvl,pxa168";
 
 	chosen {
 		bootargs = "console=ttyS0,115200 root=/dev/nfs nfsroot=192.168.1.100:/nfsroot/ ip=192.168.1.101:192.168.1.100::255.255.255.0::eth0:on";
@@ -60,6 +61,9 @@
 };
 
 &sdhci2 {
+	pinctrl-names = "default", "state_sdio_irq_fix";
+	pinctrl-0 = <&sdhci2_pins_default>;
+	pinctrl-1 = <&sdhci2_pins_card_irq_fix>;
 	non-removable;
 	no-1-8-v;
 	bus-width = <4>;
@@ -74,4 +78,29 @@
 
 &usb_host {
 	status = "okay";
+};
+
+&pinctrl {
+	/* Pin config for default SDHCI state (GPIO94 = SDIO CMD) */
+	sdhci2_pins_default: sdhci2cmd_default {
+		pinctrl-single,pins = <
+			MFP_PIN_PXA168(94) MFP_AF1
+		>;
+	};
+
+	/* Pin config for card IRQ fix state (GPIO94 = high GPIO output) */
+	sdhci2_pins_card_irq_fix: sdhci2cmd_irqfix {
+		pinctrl-single,pins = <
+			MFP_PIN_PXA168(94) MFP_AF0
+		>;
+	};
+};
+
+&gpio {
+	sdhci2_cmd_gpio {
+		gpio-hog;
+		gpios = <94 GPIO_ACTIVE_HIGH>;
+		output-high;
+		line-name = "sdhci2_cmd";
+	};
 };
