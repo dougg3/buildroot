@@ -64,6 +64,27 @@
 			};
 		};
 	};
+
+	reg_backlight: regulator-backlight {
+		compatible = "regulator-fixed";
+		regulator-name = "backlight-fixed-supply";
+		regulator-min-microvolt = <12000000>;
+		regulator-max-microvolt = <12000000>;
+		regulator-always-on;
+	};
+
+	backlight: backlight {
+		compatible = "pwm-backlight";
+		pinctrl-names = "default";
+		pinctrl-0 = <&pwm2_pins_default>;
+		/* 5,000,000 nanoseconds = 200 hz */
+		pwms = <&pwm2 5000000>;
+		power-supply = <&reg_backlight>;
+		status = "okay";
+
+		brightness-levels = <0 4 8 16 32 48 64 96 128 192 255>;
+		default-brightness-level = <5>;
+	};
 };
 
 &uart1 {
@@ -132,6 +153,12 @@
 			MFP_PIN_PXA168(119) MFP_AF0
 		>;
 	};
+
+	pwm2_pins_default: pwm2default {
+		pinctrl-single,pins = <
+			MFP_PIN_PXA168(84) MFP_AF2
+		>;
+	};
 };
 
 &ssp2 {
@@ -150,6 +177,10 @@
 		touchscreen-inverted-y;
 		touchscreen-swapped-x-y;
 	};
+};
+
+&pwm2 {
+	status = "okay";
 };
 
 &gpio {
