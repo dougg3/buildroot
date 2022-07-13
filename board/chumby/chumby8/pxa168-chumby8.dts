@@ -183,6 +183,20 @@
 	status = "okay";
 };
 
+&twsi1 {
+	status = "okay";
+	clock-frequency = <100000>;
+
+	eeprom@50 {
+		compatible = "atmel,24c08";
+		reg = <0x50>;
+	};
+};
+
+&twsi2 {
+	status = "okay";
+};
+
 &gpio {
 	sdhci2_cmd_gpio {
 		gpio-hog;
