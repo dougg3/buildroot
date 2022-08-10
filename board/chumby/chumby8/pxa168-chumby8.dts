@@ -85,6 +85,40 @@
 		brightness-levels = <0 4 8 16 32 48 64 96 128 192 255>;
 		default-brightness-level = <5>;
 	};
+
+	ssp_dai0: ssp-dai0 {
+		compatible = "mrvl,pxa168-ssp-dai";
+		pinctrl-names = "default";
+		pinctrl-0 = <&ssp1_pins_default>;
+		port = <&ssp1>;
+		#sound-dai-cells = <0>;
+		dmas = <&dma 52 2
+			&dma 53 2>;
+		dma-names = "rx", "tx";
+	};
+
+	sound {
+		compatible = "simple-audio-card";
+		simple-audio-card,name = "Chumby Speaker";
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		simple-audio-card,dai-link@0 {
+			reg = <0>;
+			format = "left_j";
+			bitclock-master = <&dailink_master_analog>;
+			frame-master = <&dailink_master_analog>;
+			mclk-fs = <256>;
+
+			dailink_master_analog: cpu {
+				sound-dai = <&ssp_dai0>;
+			};
+
+			codec {
+				sound-dai = <&wm8961>;
+			};
+		};
+	};
 };
 
 &dma {
@@ -163,6 +197,25 @@
 			MFP_PIN_PXA168(84) MFP_AF2
 		>;
 	};
+
+	/* Pin config for SSP1 -- audio interface */
+	ssp1_pins_default: ssp1default {
+		pinctrl-single,pins = <
+			MFP_PIN_PXA168(113) MFP_AF6
+			MFP_PIN_PXA168(114) MFP_AF1
+			MFP_PIN_PXA168(115) MFP_AF1
+			MFP_PIN_PXA168(116) MFP_AF2
+			MFP_PIN_PXA168(117) MFP_AF2
+		>;
+	};
+};
+
+&ssp1 {
+	status = "okay";
+	/* In order to use with generic I/O core instead of SPI */
+	compatible = "mvrl,pxa168-ssp";
+	dmas = <&dma 52 2
+		&dma 53 2>;
 };
 
 &ssp2 {
@@ -199,6 +252,13 @@
 
 &twsi2 {
 	status = "okay";
+	clock-frequency = <100000>;
+
+	wm8961: codec@4a {
+		compatible = "wlf,wm8961";
+		#sound-dai-cells = <0>;
+		reg = <0x4a>;
+	};
 };
 
 &gpio {
