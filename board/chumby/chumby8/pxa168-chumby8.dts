@@ -100,6 +100,20 @@
 	sound {
 		compatible = "simple-audio-card";
 		simple-audio-card,name = "Chumby Speaker";
+		simple-audio-card,widgets =
+			"Microphone", "Internal Mic",
+			"Headphone", "Headphones",
+			"Speaker", "Speaker";
+		simple-audio-card,routing =
+			"LINPUT", "Internal Mic",
+			"LINPUT", "MICBIAS",
+			"Headphones", "HP_L",
+			"Headphones", "HP_R",
+			"Speaker", "SPK_LN",
+			"Speaker", "SPK_LP",
+			"Speaker", "SPK_RN",
+			"Speaker", "SPK_RP";
+		simple-audio-card,hp-det-gpio = <&gpio 97 GPIO_ACTIVE_LOW>;
 		#address-cells = <1>;
 		#size-cells = <0>;
 
