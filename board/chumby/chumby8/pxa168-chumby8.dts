@@ -19,17 +19,6 @@
 		ranges;
 
 		bootargs = "console=ttyS0,115200 root=/dev/nfs nfsroot=192.168.1.100:/nfsroot/ ip=192.168.1.101:192.168.1.100::255.255.255.0::eth0:on";
-
-		framebuffer@7e00000 {
-			compatible = "simple-framebuffer";
-			reg = <0x07e00000 (800 * 600 * 4)>;
-			width = <800>;
-			height = <600>;
-			stride = <(800 * 4)>;
-			format = "a8r8g8b8";
-			clocks = <&soc_clocks PXA168_CLK_DISP0>;
-			resets = <&soc_clocks PXA168_CLK_DISP0>;
-		};
 	};
 
 	aliases {
@@ -46,8 +35,10 @@
 		#size-cells = <1>;
 		ranges;
 
-		display_reserved: framebuffer@7e00000 {
-			reg = <0x07e00000 (800 * 600 * 4)>;
+		/* Reserved memory for display. This also includes the startup framebuffer */
+		framebuffer@6000000 {
+			compatible = "marvell,armada-framebuffer";
+			reg = <0x06000000 0x01000000>;
 			no-map;
 		};
 	};
@@ -130,6 +121,29 @@
 
 			codec {
 				sound-dai = <&wm8961>;
+			};
+		};
+	};
+
+	reg_lcd: regulator-lcd {
+		compatible = "regulator-fixed";
+		regulator-name = "LCD_VCC";
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+		regulator-always-on;
+		regulator-boot-on;
+	};
+
+	panel: panel {
+		compatible = "auo,a080sn01-r8-chumby";
+		/*TODO: Figure out why uncommenting this line results in a black screen
+		 *at startup*/
+		/*backlight = <&backlight>;*/
+		power-supply = <&reg_lcd>;
+
+		port {
+			panel_in: endpoint {
+				remote-endpoint = <&lcd0_rgb>;
 			};
 		};
 	};
@@ -282,4 +296,20 @@
 		output-high;
 		line-name = "sdhci2_cmd";
 	};
+};
+
+&lcd0 {
+	status = "okay";
+	preserve-startup-fb;
+	output-format = "rgb666_17:0";
+	io-pin-allocation = "dumb_18_gpio";
+	lcd0_port: port {
+		lcd0_rgb: endpoint {
+			remote-endpoint = <&panel_in>;
+		};
+	};
+};
+
+&gpu {
+	status = "okay";
 };
