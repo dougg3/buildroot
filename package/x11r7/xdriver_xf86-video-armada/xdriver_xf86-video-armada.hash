@@ -1,0 +1,6 @@
+# Locally calculated
+sha256	c7547b54f3cc4339fa8aae51e0ed696a3bc4b064b37eaf3477a8d00e99ab5edb	xdriver_xf86-video-armada-e9bef412176c571dd8f1ae6ba069c9c37da48835.tar.gz
+sha256	425b8ce03ed643f89daa3387f1620f46a798cb3087dde0f547bcd410f3107bf8	etna_viv-100009142dc24f2383525a334f7b25e883cf3d4d.tar.gz
+# Hashes for license files:
+sha256  8b815f7df9333e4ddcfaeb807328c0271da6fa6c184504cb45f86dfd262e5b0b	COPYING
+sha256  5ab92ef17676e871a624ce11b22f19a7d57b048fe793c14a2e7332847aa6f4c0	etna_viv/LICENSE

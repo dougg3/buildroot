@@ -1,0 +1,7 @@
+config BR2_PACKAGE_XDRIVER_XF86_VIDEO_ARMADA
+	bool "xf86-video-armada"
+	select BR2_PACKAGE_LIBDRM_ARMADA
+	help
+	 Xorg driver for Etnaviv GPU.
+
+	 http://git.arm.linux.org.uk/cgit/xf86-video-armada.git
