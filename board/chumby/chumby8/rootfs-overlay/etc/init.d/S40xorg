@@ -11,7 +11,8 @@ PIDFILE=/var/run/xorg.pid
 #   can't be opened or initialised.
 # -noreset prevents a server reset when the last client connection is closed.
 # -nocursor hides the cursor.
-XORG_ARGS=":0.0 vt01 -s 0 -noreset -allowMouseOpenFail -nocursor"
+# -wr starts with a white screen (instead of the default black).
+XORG_ARGS=":0.0 vt01 -s 0 -noreset -allowMouseOpenFail -nocursor -wr"
 
 start() {
 	printf "Starting Xorg: "
