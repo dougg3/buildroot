@@ -1,0 +1,18 @@
+config BR2_PACKAGE_CHUMBY_CPI
+	bool "chumby-cpi"
+	depends on BR2_arm
+	help
+	  Cryptoprocessor interface program for Chumby
+
+	  Pre-compiled binary of cpi for Chumby
+
+	  https://github.com/sutajiokousagi/cpi
+
+if BR2_PACKAGE_CHUMBY_CPI
+
+config BR2_PACKAGE_CHUMBY_CPI_C8_BIN
+	bool "chumby 8 cpi"
+	help
+	  Pre-compiled binary of cpi for Chumby 8 (silvermoon).
+
+endif
