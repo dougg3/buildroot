@@ -1,0 +1,37 @@
+#!/bin/sh
+
+start() {
+	echo -n 'Restoring date/time: '
+	if [ -f /etc/coprocessor_uptime ]; then
+		/scripts/restore_datetime.sh
+		status=$?
+		if [ "$status" -eq 0 ]; then
+			echo "OK"
+		else
+			echo "FAIL"
+		fi
+		return "$status"
+	else
+		echo "SKIPPED"
+		return 0
+	fi
+}
+
+stop() {
+	return 0
+}
+
+restart() {
+	stop
+	start
+}
+
+case "$1" in
+	start|stop|restart)
+		"$1";;
+	reload)
+		restart;;
+	*)
+		echo "Usage: $0 {start|stop|restart|reload}"
+		exit 1
+esac
