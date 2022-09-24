@@ -161,10 +161,6 @@
 	status = "okay";
 };
 
-&rtc {
-	status = "okay";
-};
-
 &sdhci3 {
 	non-removable;
 	no-1-8-v;
