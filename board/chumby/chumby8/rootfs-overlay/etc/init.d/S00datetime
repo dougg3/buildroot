@@ -1,28 +1,37 @@
 #!/bin/sh
 
+DAEMON="/scripts/auto_time_save.sh"
+PIDFILE="/var/run/auto_time_save.pid"
+
 start() {
-	echo -n 'Restoring date/time: '
-	if [ -f /etc/coprocessor_uptime ]; then
-		/scripts/restore_datetime.sh
-		status=$?
-		if [ "$status" -eq 0 ]; then
-			echo "OK"
-		else
-			echo "FAIL"
-		fi
-		return "$status"
+	printf "Starting date/time sync: "
+
+	start-stop-daemon -b -m -S -q -p "$PIDFILE" -x "$DAEMON"
+	status=$?
+	if [ "$status" -eq 0 ]; then
+		echo "OK"
 	else
-		echo "SKIPPED"
-		return 0
+		echo "FAIL"
 	fi
+	return "$status"
 }
 
 stop() {
-	return 0
+	printf "Stopping date/time sync: "
+	start-stop-daemon -K -q -p "$PIDFILE"
+	status=$?
+	if [ "$status" -eq 0 ]; then
+		rm -f "$PIDFILE"
+		echo "OK"
+	else
+		echo "FAIL"
+	fi
+	return "$status"
 }
 
 restart() {
 	stop
+	sleep 1
 	start
 }
 
@@ -30,6 +39,7 @@ case "$1" in
 	start|stop|restart)
 		"$1";;
 	reload)
+		# Restart, since there is no true "reload" feature.
 		restart;;
 	*)
 		echo "Usage: $0 {start|stop|restart|reload}"
