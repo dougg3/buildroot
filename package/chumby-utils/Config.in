@@ -1,0 +1,12 @@
+config BR2_PACKAGE_CHUMBY_UTILS
+	bool "chumby-utils"
+	depends on BR2_arm
+	select BR2_PACKAGE_LIBGPIOD
+	help
+	  Miscellaneous Chumby utilities
+
+	  Currently only contains chumby_card_reader_daemon for
+	  monitoring the card reader and connecting and disconnecting
+	  it from USB.
+
+	  https://github.com/dougg3/chumby-utils
