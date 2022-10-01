@@ -7,3 +7,4 @@ mkdir -p ${TARGET_DIR}/mnt/settings
 
 # Populate settings partition
 mkdir -p ${BINARIES_DIR}/settings
+cp ${BOARD_DIR}/touchscreen.conf ${BINARIES_DIR}/settings/
