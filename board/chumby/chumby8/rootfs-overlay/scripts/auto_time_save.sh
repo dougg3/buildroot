@@ -3,7 +3,7 @@
 # Simple script that ensures we try to stay in sync with the cryptoprocessor's
 # "time since last boot" counter so the time is tracked properly while turned off.
 
-UPTIME_FILE=/etc/coprocessor_uptime
+UPTIME_FILE=/mnt/settings/coprocessor_uptime
 
 ntpvalid() {
 	NTP_OUTPUT=$(ntpq -c "rv 0 leap" 127.0.0.1)

@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Restores date/time from file saved by save_datetime.sh and coprocessor uptime
-UPTIMEFILE=/etc/coprocessor_uptime
+UPTIMEFILE=/mnt/settings/coprocessor_uptime
 
 # Check for the file
 if [ ! -f $UPTIMEFILE ]; then

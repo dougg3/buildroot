@@ -2,7 +2,7 @@
 
 # Saves current date/time and coprocessor uptime to a file,
 # so we can estimate the new date/time when it powers back up
-UPTIMEFILE=/etc/coprocessor_uptime
+UPTIMEFILE=/mnt/settings/coprocessor_uptime
 
 # Grab the coprocessor uptime and the current date/time as an epoch
 UPTIME=$(/scripts/get_coprocessor_uptime.sh)
@@ -15,6 +15,4 @@ if [ $UPTIME = "ERROR" ]; then
 fi
 
 # Save them into the file
-mount -oremount,rw /
-echo $UPTIME $DATETIME > /etc/coprocessor_uptime
-mount -oremount,ro /
+echo $UPTIME $DATETIME > $UPTIMEFILE
