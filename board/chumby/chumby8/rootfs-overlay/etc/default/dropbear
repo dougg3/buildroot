@@ -1,2 +1,6 @@
 # Allow empty password logins
 DROPBEAR_ARGS=-B
+
+# Make sure the settings directory exists.
+# It's kind of cheesy to put this here, but hey, it should work fine
+mkdir -p /mnt/settings/dropbear
