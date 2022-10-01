@@ -1,0 +1,8 @@
+config BR2_PACKAGE_CHUMBY8TSCAL
+	bool "chumby8tscal"
+	depends on BR2_PACKAGE_QT5
+	select BR2_PACKAGE_QT5BASE_WIDGETS
+	help
+	  Touchscreen calibration program for Chumby 8
+
+	  https://github.com/dougg3/Chumby8TSCal
