@@ -171,9 +171,9 @@
 };
 
 &sdhci2 {
-	pinctrl-names = "default", "state_sdio_irq_fix";
+	pinctrl-names = "default", "state_cmd_gpio";
 	pinctrl-0 = <&sdhci2_pins_default>;
-	pinctrl-1 = <&sdhci2_pins_card_irq_fix>;
+	pinctrl-1 = <&sdhci2_pins_cmd_gpio>;
 	non-removable;
 	no-1-8-v;
 	bus-width = <4>;
@@ -199,7 +199,7 @@
 	};
 
 	/* Pin config for card IRQ fix state (GPIO94 = high GPIO output) */
-	sdhci2_pins_card_irq_fix: sdhci2cmd_irqfix {
+	sdhci2_pins_cmd_gpio: sdhci2cmd_gpio {
 		pinctrl-single,pins = <
 			MFP_PIN_PXA168(94) MFP_AF0
 		>;
