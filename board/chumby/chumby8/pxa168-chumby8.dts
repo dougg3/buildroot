@@ -5,7 +5,7 @@
  */
 
 /dts-v1/;
-#include "pxa168.dtsi"
+#include "marvell/pxa168.dtsi"
 #include <dt-bindings/gpio/gpio.h>
 #include <dt-bindings/interrupt-controller/irq.h>
 
