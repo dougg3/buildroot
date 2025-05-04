@@ -117,6 +117,7 @@
 
 			dailink_master_analog: cpu {
 				sound-dai = <&ssp_dai0>;
+				system-clock-direction-out;
 			};
 
 			codec {
